@@ -5,9 +5,10 @@ import { AppComponent } from "./app.component";
 import { HomePageComponent } from "./home-page/home-page.component";
 import { RecipeDetailsPageComponent } from "./recipe-details-page/recipe-details-page.component";
 import { ShoppingListPageComponent } from "./shopping-list-page/shopping-list-page.component";
+import { SideMenuComponent } from "./side-menu/side-menu.component";
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent, RecipeDetailsPageComponent, ShoppingListPageComponent],
+  declarations: [AppComponent, HomePageComponent, RecipeDetailsPageComponent, ShoppingListPageComponent, SideMenuComponent],
   imports: [BrowserModule],
   providers: [],
   bootstrap: [AppComponent],
