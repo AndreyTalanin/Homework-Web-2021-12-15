@@ -1,8 +1,6 @@
-<h1>Fish Feast - Recipe Details</h1>
+<h1>{{ recipe.title }} - Recipe Details</h1>
 <h2>Description</h2>
-<p>Set out a great feast that will feed your party!</p>
-<p>Restores 22500 health and 19200 mana over 30 sec.</p>
-<p>If you spend at least 10 seconds eating you will become well fed and gain 80 Attack Power, 46 Spell Power and 40 Stamina for 1 hr.</p>
+<p *ngFor="let descriptionLine of recipe.description">{{ descriptionLine }}</p>
 <h2>Recipe Reagents</h2>
 <table>
   <thead>
@@ -20,23 +18,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>100</td>
-      <td>Northern Spices</td>
+    <tr *ngFor="let recipeReagentInfo of recipe.reagents">
+      <td>{{ recipeReagentInfo.quantity }}</td>
+      <td>{{ recipeReagentInfo.reagent.name }}</td>
       <td>
-        <a href="https://wotlkdb.com/?item=43007">External Database Link</a>
+        <a href="{{ recipeReagentInfo.reagent.externalDatabaseLink }}" target="_blank" rel="noopener noreferrer">{{ recipeReagentInfo.reagent.name }}</a>
       </td>
-      <td><button>Add to the Shopping List</button></td>
-    </tr>
-    <tr>
-      <td>200</td>
-      <td>Nettlefish</td>
       <td>
-        <a href="https://wotlkdb.com/?item=41813">External Database Link</a>
+        <button (click)="addRecipeReagentToShoppingList(recipeReagentInfo.reagent.id)">Add to the Shopping List</button>
       </td>
-      <td><button>Add to the Shopping List</button></td>
     </tr>
   </tbody>
 </table>
 <h2>Actions</h2>
-<button>Add the Recipe to the Shopping List</button>
+<button (click)="addRecipeToShoppingList()">Add the Recipe to the Shopping List</button>
