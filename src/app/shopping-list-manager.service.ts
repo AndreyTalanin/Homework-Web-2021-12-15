@@ -1,32 +1,57 @@
 import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 import { ShoppingListItem } from "./entities/shopping-list-item";
-
-interface IShoppingListManagerService {
-  getShoppingListItems(): ShoppingListItem[];
-  addShoppingListItem(item: ShoppingListItem): void;
-  editShoppingListItem(item: ShoppingListItem): void;
-  removeShoppingListItem(item: ShoppingListItem): void;
-}
 
 @Injectable({
   providedIn: "root",
 })
-export class ShoppingListManagerService implements IShoppingListManagerService {
+export class ShoppingListManagerService {
+  items: ShoppingListItem[] = [];
+  eventStream: Subject<{}> = new Subject<{}>();
+
   constructor() {}
 
+  mergeItems(): void {
+    const newItems = new Map<string, ShoppingListItem>();
+    for (const item of this.items) {
+      const name = item.getName();
+      if (newItems.has(name)) {
+        const alreadyExistingItem = newItems.get(name);
+        alreadyExistingItem.quantity += item.quantity;
+      } else {
+        newItems.set(name, item);
+      }
+    }
+
+    this.items = [...newItems.values()];
+  }
+
   getShoppingListItems(): ShoppingListItem[] {
-    throw new Error("Method not implemented.");
+    return this.items;
   }
 
   addShoppingListItem(item: ShoppingListItem): void {
-    throw new Error("Method not implemented.");
+    this.items = [...this.items, item];
+    this.mergeItems();
+    this.eventStream.next({});
   }
 
   editShoppingListItem(item: ShoppingListItem): void {
-    throw new Error("Method not implemented.");
+    this.items = [...this.items];
+    this.eventStream.next({});
   }
 
   removeShoppingListItem(item: ShoppingListItem): void {
-    throw new Error("Method not implemented.");
+    this.items = this.items.filter((existingItem) => existingItem != item);
+    this.eventStream.next({});
+  }
+
+  clearShoppingList(): void {
+    this.items = [];
+    this.eventStream.next({});
+  }
+
+  getObservable(): Observable<{}> {
+    return this.eventStream;
   }
 }
