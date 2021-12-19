@@ -1,6 +1,7 @@
 <h1>Shopping List</h1>
 <h2>Reagents Currently in the Shopping List</h2>
-<table>
+<p *ngIf="items.length == 0">Your shopping list is currently empty.</p>
+<table *ngIf="items.length > 0">
   <thead>
     <colgroup>
       <col width="15%" />
@@ -16,24 +17,21 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>100</td>
-      <td>Northern Spices</td>
+    <tr *ngFor="let item of items">
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.name }}</td>
       <td>
-        <a href="https://wotlkdb.com/?item=43007">External Database Link</a>
+        <a href="{{ item.externalDatabaseLink }}" target="_blank" rel="noopener noreferrer" *ngIf="item.externalDatabaseLink != null">{{ item.name }}</a>
       </td>
-      <td><button>Change Quantity</button>&#32;<button>Remove</button></td>
-    </tr>
-    <tr>
-      <td>200</td>
-      <td>Nettlefish</td>
       <td>
-        <a href="https://wotlkdb.com/?item=41813">External Database Link</a>
+        <button (click)="changeShoppingListItemQuantity(item)">Change Quantity</button>
+        &#32;
+        <button (click)="removeShoppingListItem(item)">Remove</button>
       </td>
-      <td><button>Change Quantity</button>&#32;<button>Remove</button></td>
     </tr>
   </tbody>
 </table>
 <h2>Actions</h2>
-<button>Add a Reagent Manually</button>
-<button>Clear the Shopping List</button>
+<button (click)="addShoppingListItem()">Add a Reagent Manually</button>
+&#32;
+<button *ngIf="items.length > 0" (click)="clearShoppingListItem()">Clear the Shopping List</button>
