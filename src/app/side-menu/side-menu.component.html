@@ -2,24 +2,13 @@
 <h2>Available Recipes</h2>
 <p>Here are recipes that are available at the moment:</p>
 <ul>
-  <li>
-    <a href="https://wotlkdb.com/?spell=57423">External Database Link</a>
-    (<a href="#">Show Details</a>)
+  <li *ngFor="let recipe of recipeList">
+    <a href="{{ recipe.externalDatabaseLink }}" target="_blank" rel="noopener noreferrer">{{ recipe.title }}</a>
+    (<a routerLink="/recipe-details/{{ recipe.id }}">Show Recipe Details</a>)
   </li>
-  <li>
-    <a href="https://wotlkdb.com/?spell=58527">External Database Link</a>
-    (<a href="#">Show Details</a>)
-  </li>
-  <li>
-    <a href="https://wotlkdb.com/?spell=58528">External Database Link</a>
-    (<a href="#">Show Details</a>)
-  </li>
-  <li>Blackened Dragonfin</li>
-  <li>Blackened Worg Steak</li>
-  <li>Critter Bites</li>
 </ul>
 <h2>Shopping List</h2>
-<p>Do you want to go to your shopping list?</p>
+<p>Do you want to go to your <a routerLink="/shopping-list">shopping list</a>?</p>
 <h2>Credits</h2>
 <p>The Recipe Book application by Andrey Talanin.</p>
 <p>The recipes by Blizzard Entertainment, Inc.</p>
